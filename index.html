@@ -3,464 +3,854 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ARENA DEDICATION – Champion Checkliste</title>
+<title>LoL Champions Checkliste</title>
 <link rel="icon" href="logo.PNG" type="image/png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --gold:    #c8aa6e;
-    --gold2:   #f0e6d3;
-    --brown:   #785a28;
-    --dark:    #010a13;
-    --panel:   #0a1628;
-    --border:  #1e3a5f;
-    --green:   #4caf50;
-    --red:     #e8604c;
-    --blue:    #5b9bd5;
-    --purple:  #9b59b6;
-    --teal:    #2ecc71;
-    --orange:  #f39c12;
-  }
-
+  * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    font-family: 'Inter', sans-serif;
-    background: var(--dark);
-    color: var(--gold);
+    font-family: 'Segoe UI', sans-serif;
+    background: #0a0a14;
+    color: #c8aa6e;
     min-height: 100vh;
+    padding: 20px;
   }
-
-  /* ── HERO ── */
-  .hero {
-    position: relative;
-    padding: 60px 20px 40px;
+  h1 {
     text-align: center;
-    background: linear-gradient(180deg, #0d1f3c 0%, var(--dark) 100%);
-    border-bottom: 1px solid var(--border);
-    overflow: hidden;
+    font-size: 2em;
+    color: #c8aa6e;
+    text-shadow: 0 0 20px #c8aa6e66;
+    margin-bottom: 4px;
+    letter-spacing: 2px;
   }
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 60% 40% at 50% 0%, #1a3a6644 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .hero-logo {
-    width: 140px;
-    height: 140px;
-    object-fit: contain;
-    margin-bottom: 16px;
-    filter: drop-shadow(0 0 20px #c8aa6e33);
-  }
-    font-family: 'Inter', sans-serif;
-    font-size: 0.7em;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--brown);
-    margin-bottom: 12px;
-  }
-  .hero-title {
-    font-family: 'Cinzel', serif;
-    font-size: clamp(2em, 6vw, 4em);
-    font-weight: 800;
-    color: var(--gold2);
-    text-shadow: 0 0 40px #c8aa6e44;
-    line-height: 1.1;
-    margin-bottom: 10px;
-  }
-  .hero-sub {
-    font-size: 0.9em;
-    color: var(--brown);
+  .subtitle {
+    text-align: center;
+    color: #785a28;
+    margin-bottom: 18px;
+    font-size: 0.85em;
     letter-spacing: 1px;
   }
-
-  /* ── STATS BAR ── */
-  .stats-bar {
+  .stats {
     display: flex;
+    gap: 12px;
     justify-content: center;
-    gap: 0;
+    margin-bottom: 14px;
     flex-wrap: wrap;
-    border-bottom: 1px solid var(--border);
-    background: #050d1a;
   }
-  .stat {
-    padding: 16px 28px;
+  .stat-box {
+    background: #0d1117;
+    border: 1px solid #2a1e0e;
+    border-radius: 8px;
+    padding: 8px 18px;
     text-align: center;
-    border-right: 1px solid var(--border);
-    min-width: 120px;
+    min-width: 100px;
   }
-  .stat:last-child { border-right: none; }
-  .stat-num {
-    font-family: 'Cinzel', serif;
-    font-size: 1.8em;
-    font-weight: 600;
-    color: var(--gold);
-    line-height: 1;
-  }
-  .stat-label {
-    font-size: 0.65em;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--brown);
-    margin-top: 4px;
-  }
-
-  /* ── PROGRESS BAR ── */
-  .progress-wrap {
-    background: #050d1a;
-    padding: 0 20px 16px;
-    border-bottom: 1px solid var(--border);
-  }
-  .progress-track {
-    max-width: 800px;
-    margin: 0 auto;
-    height: 6px;
-    background: #0d1f3c;
-    border-radius: 3px;
+  .stat-box .num { font-size: 1.6em; font-weight: bold; color: #c8aa6e; }
+  .stat-box .label { font-size: 0.7em; color: #785a28; text-transform: uppercase; letter-spacing: 1px; }
+  .progress-bar {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto 18px;
+    background: #1a1208;
+    border-radius: 10px;
+    height: 10px;
+    border: 1px solid #2a1e0e;
     overflow: hidden;
   }
   .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, var(--brown), var(--gold));
-    border-radius: 3px;
-    transition: width 0.6s cubic-bezier(.4,0,.2,1);
+    background: linear-gradient(90deg, #785a28, #c8aa6e);
+    border-radius: 10px;
+    transition: width 0.3s;
   }
-
-  /* ── VIEWS BADGE ── */
-  .views-badge {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    padding: 10px;
-    font-size: 0.75em;
-    color: var(--brown);
-    letter-spacing: 1px;
-    border-bottom: 1px solid var(--border);
-    background: #050d1a;
-  }
-  .views-badge .eye { font-size: 1em; }
-  #view-count { color: var(--gold); font-weight: 500; }
-
-  /* ── CONTROLS ── */
   .controls {
-    padding: 16px 20px;
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
     justify-content: center;
     align-items: center;
-    border-bottom: 1px solid var(--border);
-    background: #050d1a;
-    position: sticky;
-    top: 0;
-    z-index: 10;
+    margin-bottom: 18px;
   }
-  .ctrl-input {
+  input[type="text"] {
     padding: 7px 13px;
-    border-radius: 4px;
-    border: 1px solid var(--border);
-    background: var(--panel);
-    color: var(--gold);
-    font-size: 0.85em;
-    width: 200px;
+    border-radius: 6px;
+    border: 1px solid #2a1e0e;
+    background: #0d1117;
+    color: #c8aa6e;
+    font-size: 0.9em;
+    width: 220px;
     outline: none;
-    font-family: 'Inter', sans-serif;
   }
-  .ctrl-input::placeholder { color: #2a3a50; }
-  .ctrl-input:focus { border-color: var(--brown); }
-  .ctrl-select {
+  input[type="text"]::placeholder { color: #3a2e1a; }
+  input[type="text"]:focus { border-color: #785a28; }
+  select {
     padding: 7px 13px;
-    border-radius: 4px;
-    border: 1px solid var(--border);
-    background: var(--panel);
-    color: var(--gold);
-    font-size: 0.85em;
+    border-radius: 6px;
+    border: 1px solid #2a1e0e;
+    background: #0d1117;
+    color: #c8aa6e;
+    font-size: 0.9em;
     outline: none;
     cursor: pointer;
-    font-family: 'Inter', sans-serif;
   }
-  .sort-btns { display: flex; gap: 0; border-radius: 4px; overflow: hidden; border: 1px solid var(--border); }
+  .sort-btns { display: flex; gap: 4px; }
   .sort-btn {
     padding: 7px 14px;
-    background: var(--panel);
-    color: #2a4a6a;
-    font-size: 0.8em;
+    border-radius: 6px;
+    border: 1px solid #2a1e0e;
+    background: #0d1117;
+    color: #785a28;
+    font-size: 0.85em;
     cursor: pointer;
-    border: none;
-    font-family: 'Inter', sans-serif;
     transition: all 0.15s;
-    letter-spacing: 0.5px;
   }
-  .sort-btn + .sort-btn { border-left: 1px solid var(--border); }
-  .sort-btn.active { background: #0d1f3c; color: var(--gold); }
-  .sort-btn:hover:not(.active) { color: var(--brown); }
-
-  /* ── GRID ── */
-  .grid-wrap { padding: 16px 16px 40px; max-width: 1600px; margin: 0 auto; }
+  .sort-btn.active { border-color: #c8aa6e; color: #c8aa6e; background: #1a1208; }
+  .sort-btn:hover { border-color: #785a28; color: #c8aa6e; }
+  .action-btn {
+    padding: 7px 14px;
+    border-radius: 6px;
+    border: 1px solid #2a1e0e;
+    background: #0d1117;
+    color: #785a28;
+    font-size: 0.85em;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .action-btn:hover { border-color: #785a28; color: #c8aa6e; background: #1a1208; }
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
-    gap: 6px;
+    grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+    gap: 7px;
+    max-width: 1400px;
+    margin: 0 auto;
   }
   .section-header {
     grid-column: 1 / -1;
-    font-family: 'Cinzel', serif;
-    font-size: 0.68em;
-    letter-spacing: 3px;
+    font-size: 0.72em;
     text-transform: uppercase;
-    padding: 10px 4px 6px;
-    border-bottom: 1px solid #0d1f3c;
-    margin-top: 10px;
+    letter-spacing: 2px;
+    padding: 6px 2px 4px;
+    border-bottom: 1px solid #1a1208;
+    margin-top: 6px;
     display: flex;
     align-items: center;
     gap: 8px;
   }
-  .section-header .dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .section-header .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
   .champion {
-    background: var(--panel);
-    border: 1px solid #0d1f3c;
-    border-radius: 4px;
+    background: #0d1117;
+    border: 1px solid #1a1208;
+    border-radius: 7px;
     padding: 9px 11px;
     display: flex;
     align-items: center;
-    gap: 8px;
-    transition: border-color 0.1s;
+    gap: 9px;
+    cursor: pointer;
+    transition: all 0.12s;
+    user-select: none;
   }
-  .champion.done { background: #071510; border-color: #1a3a1a; }
-  .champion.done .champ-name { color: var(--green); }
-  .champion:not(.done) .champ-name { color: #4a6a8a; }
-  .role-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-  .champ-name { font-size: 0.82em; font-weight: 400; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; }
-  .chk {
-    width: 16px; height: 16px;
-    border: 1.5px solid #1e3a5f;
-    border-radius: 3px;
+  .champion:hover { border-color: #3a2e1a; background: #111520; }
+  .champion.checked { background: #0a150a; border-color: #1a401a; }
+  .champion.checked .champ-name { color: #4caf50; }
+  .role-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
     flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
+  }
+  .checkbox {
+    width: 17px; height: 17px;
+    border: 1.5px solid #3a2e1a;
+    border-radius: 4px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0a0a14;
+    margin-left: auto;
+    transition: all 0.12s;
+  }
+  .champion.checked .checkbox { background: #1a401a; border-color: #4caf50; }
+  .checkbox::after {
+    content: '✓';
+    color: #4caf50;
     font-size: 11px;
-    color: transparent;
-    background: var(--dark);
+    opacity: 0;
+    transition: opacity 0.1s;
   }
-  .champion.done .chk { background: #1a3a1a; border-color: var(--green); color: var(--green); }
-  .no-results { grid-column: 1/-1; text-align: center; color: #1e3a5f; padding: 40px; font-size: 0.9em; }
-
-  /* ── FOOTER ── */
-  footer {
+  .champion.checked .checkbox::after { opacity: 1; }
+  .champ-name {
+    font-size: 0.83em;
+    color: #c8aa6e;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+  }
+  .no-results {
+    grid-column: 1 / -1;
     text-align: center;
-    padding: 20px;
-    font-size: 0.7em;
-    color: #1e3a5f;
-    border-top: 1px solid var(--border);
-    letter-spacing: 1px;
+    color: #3a2e1a;
+    padding: 40px;
+    font-size: 0.9em;
   }
+
+  .top-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 0 auto 18px;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    padding: 9px 16px;
+    border-radius: 8px;
+    border: 1px solid #2a1e0e;
+    background: #0d1117;
+    color: #785a28;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.15s;
+  }
+  .tab-btn:hover { border-color: #785a28; color: #c8aa6e; }
+  .tab-btn.active {
+    border-color: #c8aa6e;
+    color: #c8aa6e;
+    background: #1a1208;
+    box-shadow: 0 0 14px #c8aa6e22;
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  .kiryu-banner {
+    max-width: 720px;
+    margin: 0 auto 14px;
+    padding: 12px 16px;
+    border: 1px solid #2a1e0e;
+    background: #0d1117;
+    border-radius: 10px;
+    text-align: center;
+    color: #785a28;
+    font-size: 0.82em;
+  }
+  .kiryu-banner strong { color: #c8aa6e; }
+
+
+  .admin-box {
+    max-width: 720px;
+    margin: 0 auto 14px;
+    padding: 12px;
+    border: 1px solid #2a1e0e;
+    background: #0d1117;
+    border-radius: 10px;
+  }
+  .admin-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .admin-row input {
+    width: min(240px, 100%);
+  }
+  .admin-status {
+    text-align: center;
+    margin-top: 8px;
+    font-size: 0.75em;
+    color: #785a28;
+  }
+  .admin-only-note {
+    text-align: center;
+    margin: 8px 0 14px;
+    font-size: 0.75em;
+    color: #4caf50;
+    display: none;
+  }
+  #kiryu-grid.admin-mode .champion { cursor: pointer !important; }
+  #kiryu-grid.admin-mode .champion:hover { border-color: #785a28; }
+
 </style>
 </head>
 <body>
 
-<div class="hero">
-  <img src="logo.PNG" alt="Arena Dedication Logo" class="hero-logo">
-  <p class="hero-eyebrow">League of Legends · EUW</p>
-  <h1 class="hero-title">ARENA DEDICATION</h1>
-  <p class="hero-sub">Champion Checkliste · 173 Champions</p>
+<div style="text-align:center;padding-top:24px;">
+  <img src="logo.PNG" alt="Arena Dedication" style="width:120px;height:120px;object-fit:contain;filter:drop-shadow(0 0 16px #c8aa6e33);">
 </div>
 
-<div class="stats-bar">
-  <div class="stat">
-    <div class="stat-num" id="s-done">0</div>
-    <div class="stat-label">Gespielt</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num" id="s-left">173</div>
-    <div class="stat-label">Verbleibend</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num" id="s-pct">0%</div>
-    <div class="stat-label">Fortschritt</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num">173</div>
-    <div class="stat-label">Champions</div>
-  </div>
+<h1>⚔ LoL Champions Checkliste</h1>
+<p class="subtitle">173 Champions · Stand: 2026</p>
+
+<div class="top-tabs">
+  <button class="tab-btn active" id="tab-own-btn" onclick="switchTab('own')">✓ Eigene Checkliste</button>
+  <button class="tab-btn" id="tab-kiryu-btn" onclick="switchTab('kiryu')">👑 Kiryu Dedication</button>
 </div>
 
-<div class="progress-wrap">
-  <div class="progress-track">
-    <div class="progress-fill" id="prog-fill" style="width:0%"></div>
+<section class="tab-panel active" id="tab-own">
+  <div class="stats">
+    <div class="stat-box">
+      <div class="num" id="total-count">173</div>
+      <div class="label">Gesamt</div>
+    </div>
+    <div class="stat-box">
+      <div class="num" id="checked-count">0</div>
+      <div class="label">Abgehakt</div>
+    </div>
+    <div class="stat-box">
+      <div class="num" id="remaining-count">173</div>
+      <div class="label">Verbleibend</div>
+    </div>
+    <div class="stat-box">
+      <div class="num" id="percent">0%</div>
+      <div class="label">Fortschritt</div>
+    </div>
   </div>
-</div>
 
-<div class="views-badge">
-  <span class="eye">👁</span>
-  <span id="view-count">...</span>
-  <span>Aufrufe</span>
-</div>
-
-<div class="controls">
-  <input class="ctrl-input" id="search" placeholder="Champion suchen..." oninput="render()">
-  <select class="ctrl-select" id="role-f" onchange="render()">
-    <option value="">Alle Rollen</option>
-    <option value="Fighter">Fighter</option>
-    <option value="Mage">Mage</option>
-    <option value="Assassin">Assassin</option>
-    <option value="Tank">Tank</option>
-    <option value="Support">Support</option>
-    <option value="Marksman">Marksman</option>
-  </select>
-  <select class="ctrl-select" id="status-f" onchange="render()">
-    <option value="">Alle</option>
-    <option value="done">✓ Gespielt</option>
-    <option value="todo">✗ Noch nicht</option>
-  </select>
-  <div class="sort-btns">
-    <button class="sort-btn active" id="btn-role" onclick="setSort('role')">Nach Rolle</button>
-    <button class="sort-btn" id="btn-alpha" onclick="setSort('alpha')">A – Z</button>
+  <div class="progress-bar">
+    <div class="progress-fill" id="progress-fill" style="width:0%"></div>
   </div>
-</div>
 
-<div class="grid-wrap">
+  <div class="controls">
+    <input type="text" id="search" placeholder="Champion suchen..." oninput="render()">
+    <select id="role-filter" onchange="render()">
+      <option value="">Alle Rollen</option>
+      <option value="Fighter">Fighter</option>
+      <option value="Mage">Mage</option>
+      <option value="Assassin">Assassin</option>
+      <option value="Tank">Tank</option>
+      <option value="Support">Support</option>
+      <option value="Marksman">Marksman</option>
+    </select>
+    <select id="status-filter" onchange="render()">
+      <option value="">Alle</option>
+      <option value="checked">✓ Abgehakt</option>
+      <option value="unchecked">✗ Offen</option>
+    </select>
+    <div class="sort-btns">
+      <button class="sort-btn active" id="btn-role" onclick="setSort('role')">Nach Rolle</button>
+      <button class="sort-btn" id="btn-alpha" onclick="setSort('alpha')">Alphabetisch</button>
+    </div>
+    <button class="action-btn" onclick="checkAll()">Alle abhaken</button>
+    <button class="action-btn" onclick="uncheckAll()">Zurücksetzen</button>
+  </div>
+  <p style="text-align:center;font-size:0.72em;color:#4caf50;margin-top:-8px;margin-bottom:14px;">
+    ✓ Dein Fortschritt wird nur in deinem Browser gespeichert
+  </p>
+
   <div class="grid" id="grid"></div>
-</div>
+</section>
 
-<footer>ARENA DEDICATION · LoL Champion Tracker · 2026</footer>
+<section class="tab-panel" id="tab-kiryu">
+  <div class="kiryu-banner">
+    <strong>Kiryu Dedication</strong><br>
+    Öffentlicher Fortschritt – alle Besucher sehen denselben Stand.
+  </div>
 
+  <div class="admin-box">
+    <div class="admin-row" id="admin-login-row">
+      <input type="text" id="admin-email" placeholder="Admin E-Mail">
+      <input type="password" id="admin-password" placeholder="Passwort" style="padding:7px 13px;border-radius:6px;border:1px solid #2a1e0e;background:#0d1117;color:#c8aa6e;font-size:0.9em;outline:none;">
+      <button class="action-btn" onclick="adminLogin()">🔐 Kiryu Login</button>
+    </div>
+    <div class="admin-row" id="admin-logout-row" style="display:none;">
+      <button class="action-btn" onclick="adminLogout()">Abmelden</button>
+    </div>
+    <div class="admin-status" id="admin-status">Nur Kiryu kann den öffentlichen Fortschritt bearbeiten.</div>
+  </div>
+  <div class="admin-only-note" id="admin-only-note">✓ Admin-Modus aktiv – Champions anklicken, um den öffentlichen Fortschritt zu ändern.</div>
+
+  <div class="stats">
+    <div class="stat-box">
+      <div class="num" id="kiryu-total">173</div>
+      <div class="label">Gesamt</div>
+    </div>
+    <div class="stat-box">
+      <div class="num" id="kiryu-checked">0</div>
+      <div class="label">Abgehakt</div>
+    </div>
+    <div class="stat-box">
+      <div class="num" id="kiryu-remaining">173</div>
+      <div class="label">Verbleibend</div>
+    </div>
+    <div class="stat-box">
+      <div class="num" id="kiryu-percent">0%</div>
+      <div class="label">Fortschritt</div>
+    </div>
+  </div>
+
+  <div class="progress-bar">
+    <div class="progress-fill" id="kiryu-progress-fill" style="width:0%"></div>
+  </div>
+
+  <div class="grid" id="kiryu-grid"></div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-// ── DATEN ──
 const roleColors = {
-  Fighter:"#e8604c", Mage:"#5b9bd5", Assassin:"#9b59b6",
-  Tank:"#2ecc71", Support:"#f39c12", Marksman:"#3498db"
+  Fighter:   "#e8604c",
+  Mage:      "#5b9bd5",
+  Assassin:  "#9b59b6",
+  Tank:      "#2ecc71",
+  Support:   "#f39c12",
+  Marksman:  "#3498db"
 };
+
 const champions = [
-{name:"Aatrox",role:"Fighter"},{name:"Ahri",role:"Mage"},{name:"Akali",role:"Assassin"},{name:"Akshan",role:"Marksman"},{name:"Alistar",role:"Tank"},{name:"Ambessa",role:"Fighter"},{name:"Amumu",role:"Tank"},{name:"Anivia",role:"Mage"},{name:"Annie",role:"Mage"},{name:"Aphelios",role:"Marksman"},{name:"Ashe",role:"Marksman"},{name:"Aurelion Sol",role:"Mage"},{name:"Aurora",role:"Mage"},{name:"Azir",role:"Mage"},{name:"Bard",role:"Support"},{name:"Bel'Veth",role:"Fighter"},{name:"Blitzcrank",role:"Support"},{name:"Brand",role:"Mage"},{name:"Braum",role:"Support"},{name:"Briar",role:"Fighter"},{name:"Caitlyn",role:"Marksman"},{name:"Camille",role:"Fighter"},{name:"Cassiopeia",role:"Mage"},{name:"Cho'Gath",role:"Tank"},{name:"Corki",role:"Marksman"},{name:"Darius",role:"Fighter"},{name:"Diana",role:"Assassin"},{name:"Dr. Mundo",role:"Fighter"},{name:"Draven",role:"Marksman"},{name:"Ekko",role:"Assassin"},{name:"Elise",role:"Fighter"},{name:"Evelynn",role:"Assassin"},{name:"Ezreal",role:"Marksman"},{name:"Fiddlesticks",role:"Mage"},{name:"Fiora",role:"Fighter"},{name:"Fizz",role:"Assassin"},{name:"Galio",role:"Tank"},{name:"Gangplank",role:"Fighter"},{name:"Garen",role:"Fighter"},{name:"Gnar",role:"Fighter"},{name:"Gragas",role:"Tank"},{name:"Graves",role:"Marksman"},{name:"Gwen",role:"Fighter"},{name:"Hecarim",role:"Fighter"},{name:"Heimerdinger",role:"Mage"},{name:"Hwei",role:"Mage"},{name:"Illaoi",role:"Fighter"},{name:"Irelia",role:"Fighter"},{name:"Ivern",role:"Support"},{name:"Janna",role:"Support"},{name:"Jarvan IV",role:"Fighter"},{name:"Jax",role:"Fighter"},{name:"Jayce",role:"Fighter"},{name:"Jhin",role:"Marksman"},{name:"Jinx",role:"Marksman"},{name:"K'Sante",role:"Tank"},{name:"Kai'Sa",role:"Marksman"},{name:"Kalista",role:"Marksman"},{name:"Karma",role:"Support"},{name:"Karthus",role:"Mage"},{name:"Kassadin",role:"Assassin"},{name:"Katarina",role:"Assassin"},{name:"Kayle",role:"Fighter"},{name:"Kayn",role:"Fighter"},{name:"Kennen",role:"Mage"},{name:"Kha'Zix",role:"Assassin"},{name:"Kindred",role:"Marksman"},{name:"Kled",role:"Fighter"},{name:"Kog'Maw",role:"Marksman"},{name:"LeBlanc",role:"Mage"},{name:"Lee Sin",role:"Fighter"},{name:"Locke",role:"Assassin"},{name:"Leona",role:"Tank"},{name:"Lillia",role:"Fighter"},{name:"Lissandra",role:"Mage"},{name:"Lucian",role:"Marksman"},{name:"Lulu",role:"Support"},{name:"Lux",role:"Mage"},{name:"Malphite",role:"Tank"},{name:"Malzahar",role:"Mage"},{name:"Maokai",role:"Tank"},{name:"Master Yi",role:"Assassin"},{name:"Mel",role:"Mage"},{name:"Miss Fortune",role:"Marksman"},{name:"Mordekaiser",role:"Fighter"},{name:"Milio",role:"Support"},{name:"Morgana",role:"Support"},{name:"Naafiri",role:"Assassin"},{name:"Nami",role:"Support"},{name:"Nasus",role:"Fighter"},{name:"Nautilus",role:"Tank"},{name:"Neeko",role:"Mage"},{name:"Nidalee",role:"Assassin"},{name:"Nilah",role:"Fighter"},{name:"Nocturne",role:"Assassin"},{name:"Nunu & Willump",role:"Tank"},{name:"Olaf",role:"Fighter"},{name:"Orianna",role:"Mage"},{name:"Ornn",role:"Tank"},{name:"Pantheon",role:"Fighter"},{name:"Poppy",role:"Tank"},{name:"Pyke",role:"Support"},{name:"Qiyana",role:"Assassin"},{name:"Quinn",role:"Marksman"},{name:"Rakan",role:"Support"},{name:"Rammus",role:"Tank"},{name:"Rek'Sai",role:"Fighter"},{name:"Rell",role:"Tank"},{name:"Renata Glasc",role:"Support"},{name:"Renekton",role:"Fighter"},{name:"Rengar",role:"Assassin"},{name:"Riven",role:"Fighter"},{name:"Rumble",role:"Fighter"},{name:"Ryze",role:"Mage"},{name:"Samira",role:"Marksman"},{name:"Sejuani",role:"Tank"},{name:"Senna",role:"Marksman"},{name:"Seraphine",role:"Mage"},{name:"Sett",role:"Fighter"},{name:"Shaco",role:"Assassin"},{name:"Shen",role:"Tank"},{name:"Shyvana",role:"Fighter"},{name:"Singed",role:"Fighter"},{name:"Sion",role:"Tank"},{name:"Sivir",role:"Marksman"},{name:"Skarner",role:"Fighter"},{name:"Smolder",role:"Marksman"},{name:"Sona",role:"Support"},{name:"Soraka",role:"Support"},{name:"Swain",role:"Mage"},{name:"Sylas",role:"Mage"},{name:"Syndra",role:"Mage"},{name:"Tahm Kench",role:"Tank"},{name:"Taliyah",role:"Mage"},{name:"Talon",role:"Assassin"},{name:"Taric",role:"Support"},{name:"Teemo",role:"Marksman"},{name:"Thresh",role:"Support"},{name:"Tristana",role:"Marksman"},{name:"Trundle",role:"Fighter"},{name:"Tryndamere",role:"Fighter"},{name:"Twisted Fate",role:"Mage"},{name:"Twitch",role:"Marksman"},{name:"Udyr",role:"Fighter"},{name:"Urgot",role:"Fighter"},{name:"Varus",role:"Marksman"},{name:"Vayne",role:"Marksman"},{name:"Veigar",role:"Mage"},{name:"Vel'Koz",role:"Mage"},{name:"Vex",role:"Mage"},{name:"Vi",role:"Fighter"},{name:"Viego",role:"Fighter"},{name:"Viktor",role:"Mage"},{name:"Vladimir",role:"Mage"},{name:"Volibear",role:"Fighter"},{name:"Warwick",role:"Fighter"},{name:"Wukong",role:"Fighter"},{name:"Xayah",role:"Marksman"},{name:"Xerath",role:"Mage"},{name:"Xin Zhao",role:"Fighter"},{name:"Yasuo",role:"Fighter"},{name:"Yone",role:"Fighter"},{name:"Yorick",role:"Fighter"},{name:"Yuumi",role:"Support"},{name:"Yunara",role:"Support"},{name:"Zac",role:"Tank"},{name:"Zaahen",role:"Fighter"},{name:"Zed",role:"Assassin"},{name:"Zeri",role:"Marksman"},{name:"Ziggs",role:"Mage"},{name:"Zilean",role:"Support"},{name:"Zoe",role:"Mage"},{name:"Zyra",role:"Support"}
+  {name:"Aatrox",role:"Fighter"},
+  {name:"Ahri",role:"Mage"},
+  {name:"Akali",role:"Assassin"},
+  {name:"Akshan",role:"Marksman"},
+  {name:"Alistar",role:"Tank"},
+  {name:"Ambessa",role:"Fighter"},
+  {name:"Amumu",role:"Tank"},
+  {name:"Anivia",role:"Mage"},
+  {name:"Annie",role:"Mage"},
+  {name:"Aphelios",role:"Marksman"},
+  {name:"Ashe",role:"Marksman"},
+  {name:"Aurelion Sol",role:"Mage"},
+  {name:"Aurora",role:"Mage"},
+  {name:"Azir",role:"Mage"},
+  {name:"Bard",role:"Support"},
+  {name:"Bel'Veth",role:"Fighter"},
+  {name:"Blitzcrank",role:"Support"},
+  {name:"Brand",role:"Mage"},
+  {name:"Braum",role:"Support"},
+  {name:"Briar",role:"Fighter"},
+  {name:"Caitlyn",role:"Marksman"},
+  {name:"Camille",role:"Fighter"},
+  {name:"Cassiopeia",role:"Mage"},
+  {name:"Cho'Gath",role:"Tank"},
+  {name:"Corki",role:"Marksman"},
+  {name:"Darius",role:"Fighter"},
+  {name:"Diana",role:"Assassin"},
+  {name:"Dr. Mundo",role:"Fighter"},
+  {name:"Draven",role:"Marksman"},
+  {name:"Ekko",role:"Assassin"},
+  {name:"Elise",role:"Fighter"},
+  {name:"Evelynn",role:"Assassin"},
+  {name:"Ezreal",role:"Marksman"},
+  {name:"Fiddlesticks",role:"Mage"},
+  {name:"Fiora",role:"Fighter"},
+  {name:"Fizz",role:"Assassin"},
+  {name:"Galio",role:"Tank"},
+  {name:"Gangplank",role:"Fighter"},
+  {name:"Garen",role:"Fighter"},
+  {name:"Gnar",role:"Fighter"},
+  {name:"Gragas",role:"Tank"},
+  {name:"Graves",role:"Marksman"},
+  {name:"Gwen",role:"Fighter"},
+  {name:"Hecarim",role:"Fighter"},
+  {name:"Heimerdinger",role:"Mage"},
+  {name:"Hwei",role:"Mage"},
+  {name:"Illaoi",role:"Fighter"},
+  {name:"Irelia",role:"Fighter"},
+  {name:"Ivern",role:"Support"},
+  {name:"Janna",role:"Support"},
+  {name:"Jarvan IV",role:"Fighter"},
+  {name:"Jax",role:"Fighter"},
+  {name:"Jayce",role:"Fighter"},
+  {name:"Jhin",role:"Marksman"},
+  {name:"Jinx",role:"Marksman"},
+  {name:"K'Sante",role:"Tank"},
+  {name:"Kai'Sa",role:"Marksman"},
+  {name:"Kalista",role:"Marksman"},
+  {name:"Karma",role:"Support"},
+  {name:"Karthus",role:"Mage"},
+  {name:"Kassadin",role:"Assassin"},
+  {name:"Katarina",role:"Assassin"},
+  {name:"Kayle",role:"Fighter"},
+  {name:"Kayn",role:"Fighter"},
+  {name:"Kennen",role:"Mage"},
+  {name:"Kha'Zix",role:"Assassin"},
+  {name:"Kindred",role:"Marksman"},
+  {name:"Kled",role:"Fighter"},
+  {name:"Kog'Maw",role:"Marksman"},
+  {name:"LeBlanc",role:"Mage"},
+  {name:"Lee Sin",role:"Fighter"},
+  {name:"Locke",role:"Assassin"},
+  {name:"Leona",role:"Tank"},
+  {name:"Lillia",role:"Fighter"},
+  {name:"Lissandra",role:"Mage"},
+  {name:"Lucian",role:"Marksman"},
+  {name:"Lulu",role:"Support"},
+  {name:"Lux",role:"Mage"},
+  {name:"Malphite",role:"Tank"},
+  {name:"Malzahar",role:"Mage"},
+  {name:"Maokai",role:"Tank"},
+  {name:"Master Yi",role:"Assassin"},
+  {name:"Mel",role:"Mage"},
+  {name:"Miss Fortune",role:"Marksman"},
+  {name:"Mordekaiser",role:"Fighter"},
+  {name:"Milio",role:"Support"},
+  {name:"Morgana",role:"Support"},
+  {name:"Naafiri",role:"Assassin"},
+  {name:"Nami",role:"Support"},
+  {name:"Nasus",role:"Fighter"},
+  {name:"Nautilus",role:"Tank"},
+  {name:"Neeko",role:"Mage"},
+  {name:"Nidalee",role:"Assassin"},
+  {name:"Nilah",role:"Fighter"},
+  {name:"Nocturne",role:"Assassin"},
+  {name:"Nunu & Willump",role:"Tank"},
+  {name:"Olaf",role:"Fighter"},
+  {name:"Orianna",role:"Mage"},
+  {name:"Ornn",role:"Tank"},
+  {name:"Pantheon",role:"Fighter"},
+  {name:"Poppy",role:"Tank"},
+  {name:"Pyke",role:"Support"},
+  {name:"Qiyana",role:"Assassin"},
+  {name:"Quinn",role:"Marksman"},
+  {name:"Rakan",role:"Support"},
+  {name:"Rammus",role:"Tank"},
+  {name:"Rek'Sai",role:"Fighter"},
+  {name:"Rell",role:"Tank"},
+  {name:"Renata Glasc",role:"Support"},
+  {name:"Renekton",role:"Fighter"},
+  {name:"Rengar",role:"Assassin"},
+  {name:"Riven",role:"Fighter"},
+  {name:"Rumble",role:"Fighter"},
+  {name:"Ryze",role:"Mage"},
+  {name:"Samira",role:"Marksman"},
+  {name:"Sejuani",role:"Tank"},
+  {name:"Senna",role:"Marksman"},
+  {name:"Seraphine",role:"Mage"},
+  {name:"Sett",role:"Fighter"},
+  {name:"Shaco",role:"Assassin"},
+  {name:"Shen",role:"Tank"},
+  {name:"Shyvana",role:"Fighter"},
+  {name:"Singed",role:"Fighter"},
+  {name:"Sion",role:"Tank"},
+  {name:"Sivir",role:"Marksman"},
+  {name:"Skarner",role:"Fighter"},
+  {name:"Smolder",role:"Marksman"},
+  {name:"Sona",role:"Support"},
+  {name:"Soraka",role:"Support"},
+  {name:"Swain",role:"Mage"},
+  {name:"Sylas",role:"Mage"},
+  {name:"Syndra",role:"Mage"},
+  {name:"Tahm Kench",role:"Tank"},
+  {name:"Taliyah",role:"Mage"},
+  {name:"Talon",role:"Assassin"},
+  {name:"Taric",role:"Support"},
+  {name:"Teemo",role:"Marksman"},
+  {name:"Thresh",role:"Support"},
+  {name:"Tristana",role:"Marksman"},
+  {name:"Trundle",role:"Fighter"},
+  {name:"Tryndamere",role:"Fighter"},
+  {name:"Twisted Fate",role:"Mage"},
+  {name:"Twitch",role:"Marksman"},
+  {name:"Udyr",role:"Fighter"},
+  {name:"Urgot",role:"Fighter"},
+  {name:"Varus",role:"Marksman"},
+  {name:"Vayne",role:"Marksman"},
+  {name:"Veigar",role:"Mage"},
+  {name:"Vel'Koz",role:"Mage"},
+  {name:"Vex",role:"Mage"},
+  {name:"Vi",role:"Fighter"},
+  {name:"Viego",role:"Fighter"},
+  {name:"Viktor",role:"Mage"},
+  {name:"Vladimir",role:"Mage"},
+  {name:"Volibear",role:"Fighter"},
+  {name:"Warwick",role:"Fighter"},
+  {name:"Wukong",role:"Fighter"},
+  {name:"Xayah",role:"Marksman"},
+  {name:"Xerath",role:"Mage"},
+  {name:"Xin Zhao",role:"Fighter"},
+  {name:"Yasuo",role:"Fighter"},
+  {name:"Yone",role:"Fighter"},
+  {name:"Yorick",role:"Fighter"},
+  {name:"Yuumi",role:"Support"},
+  {name:"Yunara",role:"Support"},
+  {name:"Zac",role:"Tank"},
+  {name:"Zaahen",role:"Fighter"},
+  {name:"Zed",role:"Assassin"},
+  {name:"Zeri",role:"Marksman"},
+  {name:"Ziggs",role:"Mage"},
+  {name:"Zilean",role:"Support"},
+  {name:"Zoe",role:"Mage"},
+  {name:"Zyra",role:"Support"},
 ];
 
-// ── FORTSCHRITT (wird automatisch aus progress.json geladen) ──
-const done = new Set();
+let checked = new Set();
 let sortMode = 'role';
 
-// ── STATS ──
+try {
+  const saved = localStorage.getItem('lol_checked_v2');
+  if (saved) checked = new Set(JSON.parse(saved));
+} catch(e) {}
+
+function save() {
+  try { localStorage.setItem('lol_checked_v2', JSON.stringify([...checked])); } catch(e) {}
+}
+
 function updateStats() {
-  const n = done.size, t = champions.length;
-  document.getElementById('s-done').textContent = n;
-  document.getElementById('s-left').textContent = t - n;
-  document.getElementById('s-pct').textContent = Math.round(n/t*100) + '%';
-  document.getElementById('prog-fill').style.width = (n/t*100) + '%';
+  const n = checked.size;
+  const total = champions.length;
+  document.getElementById('checked-count').textContent = n;
+  document.getElementById('remaining-count').textContent = total - n;
+  document.getElementById('percent').textContent = Math.round(n / total * 100) + '%';
+  document.getElementById('progress-fill').style.width = (n / total * 100) + '%';
+  document.getElementById('total-count').textContent = total;
 }
 
-// ── PROGRESS.JSON laden ──
-async function loadProgress() {
-  try {
-    const r = await fetch('./progress.json?nocache=' + Date.now());
-    if (!r.ok) throw new Error('nicht gefunden');
-    const data = await r.json();
-
-    // progress.json hat ein "checked_names"-Array oder alternativ nur "checked" (Zahl)
-    // Wir unterstützen beides:
-    if (Array.isArray(data.checked_names)) {
-      data.checked_names.forEach(n => done.add(n));
-    } else if (data.last_checked) {
-      // Fallback: nur last_checked ist bekannt, zeige es als einzigen Eintrag
-      done.add(data.last_checked);
-    }
-  } catch(e) {
-    // progress.json fehlt oder ist leer — zeige alles als "noch nicht gespielt"
-    console.log('progress.json nicht gefunden, zeige leere Checkliste.');
-  }
+function toggle(name) {
+  if (checked.has(name)) checked.delete(name);
+  else checked.add(name);
+  save();
   updateStats();
-  render();
+  const el = document.querySelector(`.champion[data-name="${CSS.escape(name)}"]`);
+  if (el) el.classList.toggle('checked', checked.has(name));
 }
 
-// ── VIEWS (via visitor.6developer.com – gratis, kein Account nötig) ──
-function loadViews() {
-  fetch('https://visitor.6developer.com/api/v1/visit?url=beste-yuumi-euw-lol-checkliste', {
-    method: 'POST'
-  })
-    .then(r => r.json())
-    .then(d => {
-      const count = d.total ?? d.count ?? d.visits ?? '—';
-      document.getElementById('view-count').textContent =
-        typeof count === 'number' ? count.toLocaleString('de-DE') : count;
-    })
-    .catch(() => {
-      document.getElementById('view-count').textContent = '—';
-    });
-}
-
-// ── RENDER ──
-function setSort(m) {
-  sortMode = m;
-  document.getElementById('btn-role').classList.toggle('active', m==='role');
-  document.getElementById('btn-alpha').classList.toggle('active', m==='alpha');
+function setSort(mode) {
+  sortMode = mode;
+  document.getElementById('btn-role').classList.toggle('active', mode === 'role');
+  document.getElementById('btn-alpha').classList.toggle('active', mode === 'alpha');
   render();
 }
 
 function render() {
   const search = document.getElementById('search').value.toLowerCase();
-  const roleF  = document.getElementById('role-f').value;
-  const statusF = document.getElementById('status-f').value;
+  const roleFilter = document.getElementById('role-filter').value;
+  const statusFilter = document.getElementById('status-filter').value;
   const grid = document.getElementById('grid');
   grid.innerHTML = '';
 
   let filtered = champions.filter(c => {
     if (search && !c.name.toLowerCase().includes(search)) return false;
-    if (roleF && c.role !== roleF) return false;
-    if (statusF === 'done' && !done.has(c.name)) return false;
-    if (statusF === 'todo' && done.has(c.name)) return false;
+    if (roleFilter && c.role !== roleFilter) return false;
+    if (statusFilter === 'checked' && !checked.has(c.name)) return false;
+    if (statusFilter === 'unchecked' && checked.has(c.name)) return false;
     return true;
   });
 
-  if (!filtered.length) {
-    const d = document.createElement('div');
-    d.className = 'no-results';
-    d.textContent = 'Keine Champions gefunden.';
-    grid.appendChild(d);
+  if (filtered.length === 0) {
+    const msg = document.createElement('div');
+    msg.className = 'no-results';
+    msg.textContent = 'Keine Champions gefunden.';
+    grid.appendChild(msg);
     return;
   }
 
   if (sortMode === 'alpha') {
-    filtered.sort((a,b) => a.name.localeCompare(b.name));
-    let cur = '';
+    // Alphabetisch – mit Buchstaben-Trennern
+    filtered.sort((a, b) => a.name.localeCompare(b.name));
+    let currentLetter = '';
     filtered.forEach(c => {
-      const l = c.name[0].toUpperCase();
-      if (l !== cur) {
-        cur = l;
-        const h = document.createElement('div');
-        h.className = 'section-header';
-        h.style.color = '#c8aa6e';
-        h.innerHTML = `<span class="dot" style="background:#785a28"></span>${l}`;
-        grid.appendChild(h);
+      const letter = c.name[0].toUpperCase();
+      if (letter !== currentLetter) {
+        currentLetter = letter;
+        const header = document.createElement('div');
+        header.className = 'section-header';
+        header.style.color = '#c8aa6e';
+        header.innerHTML = `<span class="dot" style="background:#785a28"></span>${letter}`;
+        grid.appendChild(header);
       }
-      grid.appendChild(card(c));
+      grid.appendChild(makeCard(c));
     });
   } else {
-    const order = roleF ? [roleF] : ['Fighter','Tank','Marksman','Mage','Assassin','Support'];
+    // Nach Rolle gruppiert
+    const roleOrder = ['Fighter','Tank','Marksman','Mage','Assassin','Support'];
     const grouped = {};
-    filtered.forEach(c => { (grouped[c.role] = grouped[c.role]||[]).push(c); });
+    filtered.forEach(c => {
+      if (!grouped[c.role]) grouped[c.role] = [];
+      grouped[c.role].push(c);
+    });
+    const order = roleFilter ? [roleFilter] : roleOrder;
     order.forEach(r => {
-      if (!grouped[r]?.length) return;
-      const h = document.createElement('div');
-      h.className = 'section-header';
-      h.style.color = roleColors[r];
-      h.innerHTML = `<span class="dot" style="background:${roleColors[r]}"></span>${r} <span style="color:#1e3a5f;font-size:0.85em">(${grouped[r].length})</span>`;
-      grid.appendChild(h);
-      grouped[r].sort((a,b)=>a.name.localeCompare(b.name)).forEach(c => grid.appendChild(card(c)));
+      if (!grouped[r] || grouped[r].length === 0) return;
+      const header = document.createElement('div');
+      header.className = 'section-header';
+      header.style.color = roleColors[r];
+      header.innerHTML = `<span class="dot" style="background:${roleColors[r]}"></span>${r} <span style="color:#3a2e1a;font-size:0.9em">(${grouped[r].length})</span>`;
+      grid.appendChild(header);
+      grouped[r].sort((a, b) => a.name.localeCompare(b.name)).forEach(c => grid.appendChild(makeCard(c)));
     });
   }
 }
 
-function card(c) {
+function makeCard(c) {
   const div = document.createElement('div');
-  div.className = 'champion' + (done.has(c.name) ? ' done' : '');
-  div.innerHTML = `<span class="role-dot" style="background:${roleColors[c.role]}" title="${c.role}"></span><span class="champ-name">${c.name}</span><div class="chk">${done.has(c.name)?'✓':''}</div>`;
+  div.className = 'champion' + (checked.has(c.name) ? ' checked' : '');
+  div.setAttribute('data-name', c.name);
+  div.onclick = () => toggle(c.name);
+  div.innerHTML = `<span class="role-dot" style="background:${roleColors[c.role]}" title="${c.role}"></span><span class="champ-name">${c.name}</span><div class="checkbox"></div>`;
   return div;
 }
 
-loadProgress(); // lädt progress.json und ruft dann render() + updateStats() auf
-loadViews();
+function checkAll() {
+  const search = document.getElementById('search').value.toLowerCase();
+  const roleFilter = document.getElementById('role-filter').value;
+  champions.filter(c => {
+    if (search && !c.name.toLowerCase().includes(search)) return false;
+    if (roleFilter && c.role !== roleFilter) return false;
+    return true;
+  }).forEach(c => checked.add(c.name));
+  save(); updateStats(); render();
+}
+
+function uncheckAll() {
+  const search = document.getElementById('search').value.toLowerCase();
+  const roleFilter = document.getElementById('role-filter').value;
+  if (!search && !roleFilter) {
+    checked.clear();
+  } else {
+    champions.filter(c => {
+      if (search && !c.name.toLowerCase().includes(search)) return false;
+      if (roleFilter && c.role !== roleFilter) return false;
+      return true;
+    }).forEach(c => checked.delete(c.name));
+  }
+  save(); updateStats(); render();
+}
+
+
+
+const SUPABASE_URL = 'DEINE_SUPABASE_URL';
+const SUPABASE_KEY = 'DEIN_SUPABASE_PUBLISHABLE_KEY';
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let isKiryuAdmin = false;
+
+let kiryuChecked = new Set();
+
+function switchTab(tab) {
+  document.getElementById('tab-own').classList.toggle('active', tab === 'own');
+  document.getElementById('tab-kiryu').classList.toggle('active', tab === 'kiryu');
+  document.getElementById('tab-own-btn').classList.toggle('active', tab === 'own');
+  document.getElementById('tab-kiryu-btn').classList.toggle('active', tab === 'kiryu');
+  if (tab === 'kiryu') loadKiryuProgress();
+}
+
+async function loadKiryuProgress() {
+  try {
+    const { data, error } = await sb
+      .from('kiryu_progress')
+      .select('checked_champions, updated_at')
+      .eq('id', 1)
+      .single();
+
+    if (error) throw error;
+    kiryuChecked = new Set(Array.isArray(data.checked_champions) ? data.checked_champions : []);
+    renderKiryu();
+  } catch (e) {
+    console.error(e);
+    const grid = document.getElementById('kiryu-grid');
+    grid.innerHTML = '<div class="no-results">Kiryu-Fortschritt konnte nicht geladen werden. Supabase ist noch nicht eingerichtet oder die Zugangsdaten fehlen.</div>';
+  }
+}
+
+async function refreshAdminState() {
+  const { data } = await sb.auth.getSession();
+  isKiryuAdmin = !!(data && data.session);
+  document.getElementById('admin-login-row').style.display = isKiryuAdmin ? 'none' : 'flex';
+  document.getElementById('admin-logout-row').style.display = isKiryuAdmin ? 'flex' : 'none';
+  document.getElementById('admin-only-note').style.display = isKiryuAdmin ? 'block' : 'none';
+  document.getElementById('admin-status').textContent = isKiryuAdmin
+    ? 'Admin angemeldet.'
+    : 'Nur Kiryu kann den öffentlichen Fortschritt bearbeiten.';
+  renderKiryu();
+}
+
+async function adminLogin() {
+  const email = document.getElementById('admin-email').value.trim();
+  const password = document.getElementById('admin-password').value;
+  const status = document.getElementById('admin-status');
+
+  if (!email || !password) {
+    status.textContent = 'Bitte E-Mail und Passwort eingeben.';
+    return;
+  }
+
+  status.textContent = 'Anmeldung...';
+  const { error } = await sb.auth.signInWithPassword({ email, password });
+  if (error) {
+    status.textContent = 'Login fehlgeschlagen.';
+    console.error(error);
+    return;
+  }
+  document.getElementById('admin-password').value = '';
+  await refreshAdminState();
+}
+
+async function adminLogout() {
+  await sb.auth.signOut();
+  await refreshAdminState();
+}
+
+async function saveKiryuProgress() {
+  if (!isKiryuAdmin) return;
+
+  const { error } = await sb
+    .from('kiryu_progress')
+    .update({
+      checked_champions: [...kiryuChecked],
+      updated_at: new Date().toISOString()
+    })
+    .eq('id', 1);
+
+  const status = document.getElementById('admin-status');
+  if (error) {
+    status.textContent = 'Speichern fehlgeschlagen.';
+    console.error(error);
+  } else {
+    status.textContent = '✓ Öffentlich gespeichert';
+  }
+}
+
+async function toggleKiryu(name) {
+  if (!isKiryuAdmin) return;
+  if (kiryuChecked.has(name)) kiryuChecked.delete(name);
+  else kiryuChecked.add(name);
+  renderKiryu();
+  await saveKiryuProgress();
+}
+
+function renderKiryu() {
+  const total = champions.length;
+  const n = kiryuChecked.size;
+  document.getElementById('kiryu-total').textContent = total;
+  document.getElementById('kiryu-checked').textContent = n;
+  document.getElementById('kiryu-remaining').textContent = total - n;
+  document.getElementById('kiryu-percent').textContent = Math.round(n / total * 100) + '%';
+  document.getElementById('kiryu-progress-fill').style.width = (n / total * 100) + '%';
+
+  const grid = document.getElementById('kiryu-grid');
+  grid.innerHTML = '';
+  grid.classList.toggle('admin-mode', isKiryuAdmin);
+
+  const roleOrder = ['Fighter','Tank','Marksman','Mage','Assassin','Support'];
+  roleOrder.forEach(r => {
+    const group = champions.filter(c => c.role === r);
+    if (!group.length) return;
+
+    const header = document.createElement('div');
+    header.className = 'section-header';
+    header.style.color = roleColors[r];
+    const done = group.filter(c => kiryuChecked.has(c.name)).length;
+    header.innerHTML = `<span class="dot" style="background:${roleColors[r]}"></span>${r} <span style="color:#3a2e1a;font-size:0.9em">(${done}/${group.length})</span>`;
+    grid.appendChild(header);
+
+    group.sort((a,b) => a.name.localeCompare(b.name)).forEach(c => {
+      const div = document.createElement('div');
+      div.className = 'champion' + (kiryuChecked.has(c.name) ? ' checked' : '');
+      div.style.cursor = isKiryuAdmin ? 'pointer' : 'default';
+      if (isKiryuAdmin) div.onclick = () => toggleKiryu(c.name);
+      div.innerHTML = `<span class="role-dot" style="background:${roleColors[c.role]}" title="${c.role}"></span><span class="champ-name">${c.name}</span><div class="checkbox"></div>`;
+      grid.appendChild(div);
+    });
+  });
+}
+
+sb.auth.onAuthStateChange(() => refreshAdminState());
+loadKiryuProgress();
+refreshAdminState();
+
+render();
+updateStats();
 </script>
 </body>
 </html>
