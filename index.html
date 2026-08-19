@@ -275,10 +275,12 @@
 .site-logo{display:flex;justify-content:center;margin:0 auto 12px}
 .site-logo img{width:190px;max-width:55vw;height:auto;border-radius:18px;display:block}
 </style>
+<link rel="icon" type="image/png" href="logo.PNG">
+<link rel="apple-touch-icon" href="logo.PNG">
 </head>
 <body>
 
-<div class="site-logo"><img src="logo.png" alt="Kiryu Dedication Logo"></div>
+<div class="site-logo"><img src="logo.PNG" alt="Kiryu Dedication Logo"></div>
 <h1>⚔ LoL Champions Checkliste</h1>
 <p class="subtitle">173 Champions · Stand: 2026</p>
 
@@ -706,16 +708,25 @@ function switchTab(tab) {
 }
 
 async function loadKiryuProgress() {
+  // Die komplette Champion-Liste immer anzeigen.
+  // progress.json bestimmt NUR, welche Champions grün abgehakt sind.
+  kiryuChecked = new Set();
+  renderKiryu();
+
   try {
     const response = await fetch('progress.json?ts=' + Date.now(), { cache: 'no-store' });
     if (!response.ok) throw new Error('progress.json nicht gefunden');
+
     const data = await response.json();
-    kiryuChecked = new Set(Array.isArray(data.checked_champions) ? data.checked_champions : []);
+    const savedChampions = Array.isArray(data.checked_champions)
+      ? data.checked_champions
+      : [];
+
+    kiryuChecked = new Set(savedChampions);
     renderKiryu();
   } catch (error) {
     console.error(error);
-    const grid = document.getElementById('kiryu-grid');
-    grid.innerHTML = '<div class="no-results">progress.json konnte nicht geladen werden.</div>';
+    // Bei einem Fehler bleibt die komplette Liste sichtbar, nur ohne Haken.
   }
 }
 
