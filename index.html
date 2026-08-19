@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LoL Champions Checkliste</title>
-<link rel="icon" href="logo.PNG" type="image/png">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -237,48 +236,9 @@
   }
   .kiryu-banner strong { color: #c8aa6e; }
 
-
-  .admin-box {
-    max-width: 720px;
-    margin: 0 auto 14px;
-    padding: 12px;
-    border: 1px solid #2a1e0e;
-    background: #0d1117;
-    border-radius: 10px;
-  }
-  .admin-row {
-    display: flex;
-    gap: 8px;
-    justify-content: center;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-  .admin-row input {
-    width: min(240px, 100%);
-  }
-  .admin-status {
-    text-align: center;
-    margin-top: 8px;
-    font-size: 0.75em;
-    color: #785a28;
-  }
-  .admin-only-note {
-    text-align: center;
-    margin: 8px 0 14px;
-    font-size: 0.75em;
-    color: #4caf50;
-    display: none;
-  }
-  #kiryu-grid.admin-mode .champion { cursor: pointer !important; }
-  #kiryu-grid.admin-mode .champion:hover { border-color: #785a28; }
-
 </style>
 </head>
 <body>
-
-<div style="text-align:center;padding-top:24px;">
-  <img src="logo.PNG" alt="Arena Dedication" style="width:120px;height:120px;object-fit:contain;filter:drop-shadow(0 0 16px #c8aa6e33);">
-</div>
 
 <h1>⚔ LoL Champions Checkliste</h1>
 <p class="subtitle">173 Champions · Stand: 2026</p>
@@ -345,21 +305,8 @@
 <section class="tab-panel" id="tab-kiryu">
   <div class="kiryu-banner">
     <strong>Kiryu Dedication</strong><br>
-    Öffentlicher Fortschritt – alle Besucher sehen denselben Stand.
+    Öffentlicher Fortschritt – diese Daten werden aus <code>progress.json</code> geladen.
   </div>
-
-  <div class="admin-box">
-    <div class="admin-row" id="admin-login-row">
-      <input type="text" id="admin-email" placeholder="Admin E-Mail">
-      <input type="password" id="admin-password" placeholder="Passwort" style="padding:7px 13px;border-radius:6px;border:1px solid #2a1e0e;background:#0d1117;color:#c8aa6e;font-size:0.9em;outline:none;">
-      <button class="action-btn" onclick="adminLogin()">🔐 Kiryu Login</button>
-    </div>
-    <div class="admin-row" id="admin-logout-row" style="display:none;">
-      <button class="action-btn" onclick="adminLogout()">Abmelden</button>
-    </div>
-    <div class="admin-status" id="admin-status">Nur Kiryu kann den öffentlichen Fortschritt bearbeiten.</div>
-  </div>
-  <div class="admin-only-note" id="admin-only-note">✓ Admin-Modus aktiv – Champions anklicken, um den öffentlichen Fortschritt zu ändern.</div>
 
   <div class="stats">
     <div class="stat-box">
@@ -387,7 +334,6 @@
   <div class="grid" id="kiryu-grid"></div>
 </section>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const roleColors = {
   Fighter:   "#e8604c",
@@ -708,13 +654,6 @@ function uncheckAll() {
 }
 
 
-
-const SUPABASE_URL = 'DEINE_SUPABASE_URL';
-const SUPABASE_KEY = 'DEIN_SUPABASE_PUBLISHABLE_KEY';
-const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-let isKiryuAdmin = false;
-
 let kiryuChecked = new Set();
 
 function switchTab(tab) {
@@ -727,86 +666,21 @@ function switchTab(tab) {
 
 async function loadKiryuProgress() {
   try {
-    const { data, error } = await sb
-      .from('kiryu_progress')
-      .select('checked_champions, updated_at')
-      .eq('id', 1)
-      .single();
+    const res = await fetch('progress.json?ts=' + Date.now(), { cache: 'no-store' });
+    if (!res.ok) throw new Error('progress.json konnte nicht geladen werden');
+    const data = await res.json();
 
-    if (error) throw error;
-    kiryuChecked = new Set(Array.isArray(data.checked_champions) ? data.checked_champions : []);
+    const names = Array.isArray(data.checked_champions)
+      ? data.checked_champions
+      : (Array.isArray(data.checked) ? data.checked : []);
+
+    kiryuChecked = new Set(names);
     renderKiryu();
   } catch (e) {
     console.error(e);
     const grid = document.getElementById('kiryu-grid');
-    grid.innerHTML = '<div class="no-results">Kiryu-Fortschritt konnte nicht geladen werden. Supabase ist noch nicht eingerichtet oder die Zugangsdaten fehlen.</div>';
+    grid.innerHTML = '<div class="no-results">Kiryu-Fortschritt konnte noch nicht geladen werden. Prüfe, ob <b>progress.json</b> neben der index.html liegt.</div>';
   }
-}
-
-async function refreshAdminState() {
-  const { data } = await sb.auth.getSession();
-  isKiryuAdmin = !!(data && data.session);
-  document.getElementById('admin-login-row').style.display = isKiryuAdmin ? 'none' : 'flex';
-  document.getElementById('admin-logout-row').style.display = isKiryuAdmin ? 'flex' : 'none';
-  document.getElementById('admin-only-note').style.display = isKiryuAdmin ? 'block' : 'none';
-  document.getElementById('admin-status').textContent = isKiryuAdmin
-    ? 'Admin angemeldet.'
-    : 'Nur Kiryu kann den öffentlichen Fortschritt bearbeiten.';
-  renderKiryu();
-}
-
-async function adminLogin() {
-  const email = document.getElementById('admin-email').value.trim();
-  const password = document.getElementById('admin-password').value;
-  const status = document.getElementById('admin-status');
-
-  if (!email || !password) {
-    status.textContent = 'Bitte E-Mail und Passwort eingeben.';
-    return;
-  }
-
-  status.textContent = 'Anmeldung...';
-  const { error } = await sb.auth.signInWithPassword({ email, password });
-  if (error) {
-    status.textContent = 'Login fehlgeschlagen.';
-    console.error(error);
-    return;
-  }
-  document.getElementById('admin-password').value = '';
-  await refreshAdminState();
-}
-
-async function adminLogout() {
-  await sb.auth.signOut();
-  await refreshAdminState();
-}
-
-async function saveKiryuProgress() {
-  if (!isKiryuAdmin) return;
-
-  const { error } = await sb
-    .from('kiryu_progress')
-    .update({
-      checked_champions: [...kiryuChecked],
-      updated_at: new Date().toISOString()
-    })
-    .eq('id', 1);
-
-  const status = document.getElementById('admin-status');
-  if (error) {
-    status.textContent = 'Speichern fehlgeschlagen.';
-    console.error(error);
-  } else {
-    status.textContent = '✓ Öffentlich gespeichert';
-  }
-}
-
-async function toggleKiryu(name) {
-  if (!isKiryuAdmin) return;
-  if (kiryuChecked.has(name)) kiryuChecked.delete(name);
-  else kiryuChecked.add(name);
-  renderKiryu();
-  await saveKiryuProgress();
 }
 
 function renderKiryu() {
@@ -820,7 +694,6 @@ function renderKiryu() {
 
   const grid = document.getElementById('kiryu-grid');
   grid.innerHTML = '';
-  grid.classList.toggle('admin-mode', isKiryuAdmin);
 
   const roleOrder = ['Fighter','Tank','Marksman','Mage','Assassin','Support'];
   roleOrder.forEach(r => {
@@ -837,17 +710,12 @@ function renderKiryu() {
     group.sort((a,b) => a.name.localeCompare(b.name)).forEach(c => {
       const div = document.createElement('div');
       div.className = 'champion' + (kiryuChecked.has(c.name) ? ' checked' : '');
-      div.style.cursor = isKiryuAdmin ? 'pointer' : 'default';
-      if (isKiryuAdmin) div.onclick = () => toggleKiryu(c.name);
+      div.style.cursor = 'default';
       div.innerHTML = `<span class="role-dot" style="background:${roleColors[c.role]}" title="${c.role}"></span><span class="champ-name">${c.name}</span><div class="checkbox"></div>`;
       grid.appendChild(div);
     });
   });
 }
-
-sb.auth.onAuthStateChange(() => refreshAdminState());
-loadKiryuProgress();
-refreshAdminState();
 
 render();
 updateStats();
