@@ -279,6 +279,8 @@
 <link rel="apple-touch-icon" href="logo.PNG">
 </head>
 <body>
+<audio id="yuumi-sound" preload="auto" src="yuumi-where-s-my-fishy-fish-fish-dish-meow.mp3"></audio>
+
 
 <div class="site-logo"><img src="logo.PNG" alt="Kiryu Dedication Logo"></div>
 <h1>⚔ LoL Champions Checkliste</h1>
@@ -582,7 +584,16 @@ function updateStats() {
   document.getElementById('total-count').textContent = total;
 }
 
+function playYuumiSound(name) {
+  if (name !== 'Yuumi') return;
+  const audio = document.getElementById('yuumi-sound');
+  if (!audio) return;
+  audio.currentTime = 0;
+  audio.play().catch(() => {});
+}
+
 function toggle(name) {
+  playYuumiSound(name);
   if (checked.has(name)) checked.delete(name);
   else checked.add(name);
   save();
