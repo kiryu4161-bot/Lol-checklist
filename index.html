@@ -236,10 +236,49 @@
   }
   .kiryu-banner strong { color: #c8aa6e; }
 
+
+  .admin-box {
+    max-width: 720px;
+    margin: 0 auto 14px;
+    padding: 12px;
+    border: 1px solid #2a1e0e;
+    background: #0d1117;
+    border-radius: 10px;
+  }
+  .admin-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .admin-row input {
+    width: min(240px, 100%);
+  }
+  .admin-status {
+    text-align: center;
+    margin-top: 8px;
+    font-size: 0.75em;
+    color: #785a28;
+  }
+  .admin-only-note {
+    text-align: center;
+    margin: 8px 0 14px;
+    font-size: 0.75em;
+    color: #4caf50;
+    display: none;
+  }
+  #kiryu-grid.admin-mode .champion { cursor: pointer !important; }
+  #kiryu-grid.admin-mode .champion:hover { border-color: #785a28; }
+
+
+.site-logo{display:flex;justify-content:center;margin:0 auto 12px}
+.site-logo img{width:190px;max-width:55vw;height:auto;border-radius:18px;display:block}
 </style>
 </head>
 <body>
 
+<div class="site-logo"><img src="logo.png" alt="Kiryu Dedication Logo"></div>
 <h1>⚔ LoL Champions Checkliste</h1>
 <p class="subtitle">173 Champions · Stand: 2026</p>
 
@@ -304,8 +343,7 @@
 
 <section class="tab-panel" id="tab-kiryu">
   <div class="kiryu-banner">
-    <strong>Kiryu Dedication</strong><br>
-    Öffentlicher Fortschritt – diese Daten werden aus <code>progress.json</code> geladen.
+    <strong>Kiryu Dedication</strong>
   </div>
 
   <div class="stats">
@@ -654,6 +692,9 @@ function uncheckAll() {
 }
 
 
+
+// ===== KIRYU DEDICATION =====
+// Die öffentliche Kiryu-Liste wird aus progress.json geladen.
 let kiryuChecked = new Set();
 
 function switchTab(tab) {
@@ -666,20 +707,15 @@ function switchTab(tab) {
 
 async function loadKiryuProgress() {
   try {
-    const res = await fetch('progress.json?ts=' + Date.now(), { cache: 'no-store' });
-    if (!res.ok) throw new Error('progress.json konnte nicht geladen werden');
-    const data = await res.json();
-
-    const names = Array.isArray(data.checked_champions)
-      ? data.checked_champions
-      : (Array.isArray(data.checked) ? data.checked : []);
-
-    kiryuChecked = new Set(names);
+    const response = await fetch('progress.json?ts=' + Date.now(), { cache: 'no-store' });
+    if (!response.ok) throw new Error('progress.json nicht gefunden');
+    const data = await response.json();
+    kiryuChecked = new Set(Array.isArray(data.checked_champions) ? data.checked_champions : []);
     renderKiryu();
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    console.error(error);
     const grid = document.getElementById('kiryu-grid');
-    grid.innerHTML = '<div class="no-results">Kiryu-Fortschritt konnte noch nicht geladen werden. Prüfe, ob <b>progress.json</b> neben der index.html liegt.</div>';
+    grid.innerHTML = '<div class="no-results">progress.json konnte nicht geladen werden.</div>';
   }
 }
 
@@ -716,6 +752,8 @@ function renderKiryu() {
     });
   });
 }
+
+loadKiryuProgress();
 
 render();
 updateStats();
